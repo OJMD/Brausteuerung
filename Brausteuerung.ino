@@ -37,6 +37,8 @@ void loop() {
 
   float temperature = getTemp();
 
+/*
+
   lcd.setCursor(0,0);
   lcd.print("Hallo World...");
   lcd.setCursor(0,1);
@@ -51,23 +53,17 @@ void loop() {
 
   delay(1000);
   //lcd.clear();
+ */
+
+  Einmaischen();
 
 }
 
 void Einmaischen(){
 
   float t_ist = getTemp();
-  
 
-  if(t_ist <= Temp[0]){
-    digitalWrite(PinRelais1, EIN);
-  }else{
-    digitalWrite(PinRelais1, AUS);
-    CheckTemp[0] = true;
-  }
-
-<<<<<<< HEAD
-  long ct; // Current time
+  String ct; // Current time
 
 
   if(t_ist <= Temp[0]){
@@ -78,22 +74,21 @@ void Einmaischen(){
   }
 
   if(CheckTemp[0] = true ){
-    td = msToTime( Timer[0] - millis() );
+    ct = msToTime( Timer[0] - millis() );
   }else{
-    td = msToTime( Timer[0] );
+    ct = msToTime( Timer[0] );
   }
-=======
-  if(CheckTemp[0] = true ){
-    
-  }
-  
-  
-}
->>>>>>> b70c698e4fad8adbaf5cad9052d533bd04c099e0
-
+  // Erste Zeile .....
   lcd.setCursor(0,0);
   lcd.print("Einmaischen:");
   lcd.setCursor(13,0);
-  lcd.print( td );
+  lcd.print( Temp[0] + String("\337C") );
+  
+  // Zweite Zeile .....
+  lcd.setCursor(0,1);
+  lcd.print("Dauer:");
+  lcd.setCursor(13,0);
+  lcd.print( ct  );
+
 
 }
