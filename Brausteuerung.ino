@@ -18,9 +18,9 @@ const char AUS = HIGH;
 
 
 /*  */
-int   Temp[] = {45,62,68,72};                     // Default Temperaturen 0: Einmaischen; 1: Rast 1 usw.
-float Timer[] = {900000,180000,180000,180000};    // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
-
+float   Temp[] = {45,62,68,72};                     // Default Temperaturen 0: Einmaischen; 1: Rast 1 usw.
+long Timer[] = {900000,180000,180000,180000};    // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
+bool CheckTemp[] = {false,false,false,false};     // Alle Prüfungen auf false setzen.
 
 void setup() {
   
@@ -57,7 +57,18 @@ void loop() {
 void Einmaischen(){
 
   float t_ist = getTemp();
+  
 
+  if(t_ist <= Temp[0]){
+    digitalWrite(PinRelais1, EIN);
+  }else{
+    digitalWrite(PinRelais1, AUS);
+    CheckTemp[0] = true;
+  }
+
+  if(CheckTemp[0] = true ){
+    
+  }
   
   
 }
