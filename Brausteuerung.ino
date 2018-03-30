@@ -11,8 +11,15 @@ LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 /* Pins */
 int PinRelais1 = 7;
 
+
+/* Constante */
 const char EIN = LOW;
 const char AUS = HIGH;
+
+
+/*  */
+int   Temp[] = {45,62,68,72};                     // Default Temperaturen 0: Einmaischen; 1: Rast 1 usw.
+float Timer[] = {900000,180000,180000,180000};    // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
 
 
 void setup() {
@@ -49,6 +56,9 @@ void loop() {
 
 void Einmaischen(){
 
+  float t_ist = getTemp();
+
+  
   
 }
 
