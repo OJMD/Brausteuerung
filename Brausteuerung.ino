@@ -57,7 +57,16 @@ void loop() {
 void Einmaischen(){
 
   float t_ist = getTemp();
+  
 
+  if(t_ist <= Temp[0]){
+    digitalWrite(PinRelais1, EIN);
+  }else{
+    digitalWrite(PinRelais1, AUS);
+    CheckTemp[0] = true;
+  }
+
+<<<<<<< HEAD
   long ct; // Current time
 
 
@@ -73,6 +82,14 @@ void Einmaischen(){
   }else{
     td = msToTime( Timer[0] );
   }
+=======
+  if(CheckTemp[0] = true ){
+    
+  }
+  
+  
+}
+>>>>>>> b70c698e4fad8adbaf5cad9052d533bd04c099e0
 
   lcd.setCursor(0,0);
   lcd.print("Einmaischen:");
