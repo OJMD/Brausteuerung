@@ -1,16 +1,33 @@
-#include <LiquidCrystal_I2C.h>
+/* Brausteuerung
+Author: Oliver Milde, Steffen L
+*/
 
+#include <LiquidCrystal_I2C.h>
 #include <Wire.h>
 
 LiquidCrystal_I2C lcd(0x3F, 2, 1, 0, 4, 5, 6, 7, 3, POSITIVE);
 
+
+/* Pins */
+int PinRelais1 = 7;
+
+const char EIN = LOW;
+const char AUS = HIGH;
+
+
 void setup() {
+  
   lcd.begin(20,4);
   lcd.backlight();
+
+  pinMode(PinRelais1, OUTPUT);
+  
 }
 
 void loop() {
 
+      //digitalWrite(PinRelais1, EIN);
+      
   float temperature = getTemp();
   
   lcd.setCursor(0,0);
@@ -29,3 +46,9 @@ void loop() {
   //lcd.clear();
  
 }
+
+void Einmaischen(){
+
+  
+}
+
