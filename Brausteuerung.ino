@@ -84,6 +84,7 @@ void Task(int id){
   }
   
   }else{
+    previousMillis = currentMillis;
     ct = msToTime( Timer[id] );
   }
 
