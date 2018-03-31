@@ -18,13 +18,13 @@ const char AUS = HIGH;
 const int interval = 1000;
 
 
-unsigned long previousMillis=0; 
+unsigned long previousMillis=0;
 
 
 /*  Sollte in eine Class gepackt werden?*/
 float   Temp[] = {29,30,68,72,72,78,99};                                // Default Temperaturen 0: Einmaischen; 1: Rast 1 usw.
 //long    Timer[] = {900000,180000,180000,180000,180000,0,4500000};     // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
-long    Timer[] = {90000,90000,17000,18000,19000,0,45000};     // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
+long    Timer[] = {90000,180000,17000,18000,19000,0,45000};     // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
 bool    CheckTemp[] = {false,false,false,false,false,false};                           // Alle Prüfungen auf false setzen.
 String  Name[] = {"Einmaischen:","1. Rast:","2. Rast:","3. Rast:", "4. Rast:", "Laeutern:","Kochen:"};
 
@@ -47,8 +47,11 @@ void loop() {
 
   float temperature = getTemp();
 
+  // Hier müssen die Abfragen rein...
+
+
   Task( 1 );
- 
+
 }
 
 void Task(int id){
@@ -65,25 +68,26 @@ void Task(int id){
   }else{
     digitalWrite(PinRelais1, AUS);
     CheckTemp[id] = true;
-    
+
   }
 
   if(CheckTemp[id] == true ){
 
   if ((unsigned long)(currentMillis - previousMillis) >= interval) {
-  
+
    Timer[id] -=  (currentMillis - previousMillis);
-    
+
     if( Timer[id] <= 0 ){
       ct = " 0:00:00";
-    }else{      
+    }else{
       ct = msToTime( Timer[id] );
     }
-    
+
     previousMillis = currentMillis;
   }
-  
+
   }else{
+    previousMillis = currentMillis;
     ct = msToTime( Timer[id] );
   }
 
@@ -92,8 +96,8 @@ void Task(int id){
   lcd.print( Name[id] );
   lcd.setCursor(13,0);
   lcd.print( Temp[id] + String("\337C") );
-  
-  // Zweite Zeile .....
+
+  // Dritte Zeile .....
   lcd.setCursor(0,2);
   lcd.print("Dauer:");
   lcd.setCursor(12,2);
