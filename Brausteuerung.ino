@@ -15,12 +15,16 @@ int PinRelais1 = 7;
 /* Constante */
 const char EIN = LOW;
 const char AUS = HIGH;
+const int interval = 1000;
+
+
+unsigned long previousMillis=0; 
 
 
 /*  Sollte in eine Class gepackt werden?*/
 float   Temp[] = {29,30,68,72,72,78,99};                                // Default Temperaturen 0: Einmaischen; 1: Rast 1 usw.
 //long    Timer[] = {900000,180000,180000,180000,180000,0,4500000};     // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
-long    Timer[] = {15000,16000,17000,18000,19000,0,45000};     // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
+long    Timer[] = {90000,90000,17000,18000,19000,0,45000};     // Default Zeiten für 0: Einmaischen; 1: Rast 1 usw.
 bool    CheckTemp[] = {false,false,false,false,false,false};                           // Alle Prüfungen auf false setzen.
 String  Name[] = {"Einmaischen:","1. Rast:","2. Rast:","3. Rast:", "4. Rast:", "Laeutern:","Kochen:"};
 
@@ -51,6 +55,8 @@ void Task(int id){
 
   float t_ist = getTemp();
 
+  unsigned long currentMillis = millis();
+
   String ct; // Current time
 
 
@@ -64,23 +70,23 @@ void Task(int id){
 
   if(CheckTemp[id] == true ){
 
-   Timer[id] -= millis();
+  if ((unsigned long)(currentMillis - previousMillis) >= interval) {
+  
+   Timer[id] -=  (currentMillis - previousMillis);
     
     if( Timer[id] <= 0 ){
       ct = " 0:00:00";
     }else{      
       ct = msToTime( Timer[id] );
     }
+    
+    previousMillis = currentMillis;
+  }
   
   }else{
     ct = msToTime( Timer[id] );
   }
 
-  lcd.setCursor(10,1);
-  lcd.print( Timer[id] );
-
-  
-  
   // Erste Zeile .....
   lcd.setCursor(0,0);
   lcd.print( Name[id] );
